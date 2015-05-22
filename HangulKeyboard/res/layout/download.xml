@@ -1,0 +1,21 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#000000"
+    android:orientation="vertical" >
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="업데이트를 진행하시려면 다운로드 버튼을 누르세요" />
+    <ProgressBar
+        android:id="@+id/Loading"
+        android:layout_width="30dip"
+        android:layout_height="30dip"
+        android:visibility="gone"/>
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="다운로드"
+        android:id="@+id/downbtn" />
+</LinearLayout>  
