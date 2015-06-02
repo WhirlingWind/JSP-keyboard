@@ -22,6 +22,7 @@ package org.kandroid.app.hangulkeyboard;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.graphics.Color;
 import android.inputmethodservice.InputMethodService;
 import android.inputmethodservice.Keyboard;
 import android.inputmethodservice.KeyboardView;
@@ -119,6 +120,7 @@ public class SoftKeyboard extends InputMethodService
 				R.layout.input, null);
 		mInputView.setOnKeyboardActionListener(this);
 		mInputView.setKeyboard(mQwertyKeyboard);
+		mInputView.setPreviewEnabled(false);
 		return mInputView;
 	}
 
@@ -575,7 +577,7 @@ public class SoftKeyboard extends InputMethodService
 				&& mInputView != null) {
 			Keyboard current = mInputView.getKeyboard();
 			if (current == mSymbolsKeyboard || current == mSymbolsShiftedKeyboard) {
-				current = mQwertyKeyboard;
+				current = mHangulKeyboard;
 			}
 			// Hangul Start Code
 			else if (current == mQwertyKeyboard) {
@@ -586,7 +588,8 @@ public class SoftKeyboard extends InputMethodService
 				current = mHangulKeyboard;
 			}            
 			// Hangul End Code
-			else if (current == mHangulKeyboard) {
+			else if (current == mHangulKeyboard || current == mHangulShiftedKeyboard) {
+				mInputView.setShifted(false);
 				if (mComposing.length() > 0) {
 					getCurrentInputConnection().commitText(mComposing, mComposing.length());
 					mComposing.setLength(0);
@@ -598,9 +601,17 @@ public class SoftKeyboard extends InputMethodService
 			if (current == mSymbolsKeyboard) {
 				current.setShifted(false);
 			}
-			
-			mInputView.setPreviewEnabled(true);
-		} 
+		}
+		else if (primaryCode == -10)
+		{
+			mInputView.setShifted(false);
+			if (mComposing.length() > 0) {
+				getCurrentInputConnection().commitText(mComposing, mComposing.length());
+				mComposing.setLength(0);
+			}
+			clearHangul();
+			mInputView.setKeyboard(mQwertyKeyboard);
+		}
 		else {
 			/* original code 
 			handleCharacter(primaryCode, keyCodes);
