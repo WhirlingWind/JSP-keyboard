@@ -142,7 +142,7 @@ public class SoftKeyboard extends InputMethodService
 	    	SQLiteDatabase checkDB = null;
 	    	try{
 	    		String myPath = DB_PATH + DB_NAME;
-	    		checkDB = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READWRITE);
+	    		checkDB = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READONLY);
 	    	}catch(SQLiteException e){
 	    	}
 	    	if(checkDB != null){
@@ -167,7 +167,7 @@ public class SoftKeyboard extends InputMethodService
 
 	    public SQLiteDatabase openDataBase() throws SQLException{
 	        String myPath = DB_PATH + DB_NAME;
-	    	return SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READONLY);
+	    	return SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READWRITE);
 	    }
 	    
 	    @Override

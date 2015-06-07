@@ -84,7 +84,7 @@ public class CandidateGenerator extends AsyncTask<Void, Void, List<String>> {
 					SQL = "insert into Private "
 							+ "values('" + array.get(0) + "', '" + rtn.get(temp++) + "', " + (500 - i * 100) + ", 0)";
 					try{
-					db.rawQuery(SQL, null);
+					db.execSQL(SQL);
 					} catch (Exception e) {
 						Log.d("check error", e.toString());
 					}
