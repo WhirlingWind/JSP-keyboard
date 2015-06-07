@@ -658,7 +658,7 @@ public class SoftKeyboard extends InputMethodService
 							+ "set priority = priority + 100 "
 							+ "where word = '" + temp + "'";
 				}
-				
+				db.execSQL(SQL);
 
 				commitTyped(getCurrentInputConnection());
 				
@@ -1766,7 +1766,7 @@ Log.d("Movie", "Success idx:" + index);
 			}
 			SQL += "where word = '" + s + "'"; 
 			Log.d("dc", "dc");
-			cursor = db.rawQuery(SQL, null);
+			db.execSQL(SQL);
 			Log.d("ac", "ac");
 			InputConnection ic = getCurrentInputConnection();
 			ic.commitText(s, s.length());
