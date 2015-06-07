@@ -4,9 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.os.AsyncTask;
-
+import android.util.Log;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+
 
 public class CandidateGenerator extends AsyncTask<Void, Void, List<String>> {
 	
@@ -49,7 +50,9 @@ public class CandidateGenerator extends AsyncTask<Void, Void, List<String>> {
 				+ "order by priority desc "
 				+ "limit 5";
 		cursor = db.rawQuery(SQL, null);
-		if((resultCnt = cursor.getCount()) > 0)
+		resultCnt = cursor.getCount();
+		Log.d("check", "count "+ resultCnt);
+		if(resultCnt > 0)
 		{
 			for(int i=0;i<resultCnt;i++)
 			{
@@ -57,7 +60,8 @@ public class CandidateGenerator extends AsyncTask<Void, Void, List<String>> {
 				rtn.add(cursor.getString(1));
 			}
 		}
-		if((resultCnt = cursor.getCount()) < 5)
+		int temp = resultCnt;
+		if(resultCnt < 5)
 		{
 			SQL = "select * "
 					+ "from Server "
@@ -65,19 +69,33 @@ public class CandidateGenerator extends AsyncTask<Void, Void, List<String>> {
 					+ "order by access_num desc "
 					+ "limit " + (5 - resultCnt);
 			cursor = db.rawQuery(SQL, null);
-		}
-		if((resultCnt = cursor.getCount()) > 0)
-		{
-			for(int i=0;i<resultCnt;i++)
+			Log.d("check", "test");
+			resultCnt = cursor.getCount();
+			if(resultCnt > 0)
 			{
-				cursor.moveToNext();
-				rtn.add(cursor.getString(1));
-			}
-			for(int i=0;i<resultCnt;i++)
-			{
-				SQL = "insert into Private "
-						+ "values(" + array.get(0) + ", " + rtn.get(i) + ", " + (500 - i * 100) + ", 0)";
-				db.rawQuery(SQL, null);
+				for(int i=0;i<resultCnt;i++)
+				{
+					cursor.moveToNext();
+					rtn.add(cursor.getString(1));
+				}
+				for(int i=0;i<resultCnt;i++)
+				{
+					Log.d("check", array.get(0) + " " + rtn.get(temp) + " " + (500 - i * 100));
+					SQL = "insert into Private "
+							+ "values('" + array.get(0) + "', '" + rtn.get(temp++) + "', " + (500 - i * 100) + ", 0)";
+					try{
+					db.rawQuery(SQL, null);
+					} catch (Exception e) {
+						Log.d("check error", e.toString());
+					}
+					SQL = "select * "
+							+ "from Private "
+							+ "where word = '" + rtn.get(temp-1) + "'";
+					cursor = db.rawQuery(SQL, null);
+					cursor.moveToNext();
+					Log.d("check1", cursor.getString(0) + " "+ cursor.getString(1) + " "+ cursor.getString(2) + " "+ cursor.getString(3));
+					
+				}
 			}
 		}
 /*		if(previous != null) {

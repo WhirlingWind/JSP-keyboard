@@ -1750,17 +1750,24 @@ Log.d("Movie", "Success idx:" + index);
 			String s = mCandidateView.getCompletionInfo(index);
 			SQL = "select balloon "
 					+ "from Private "
-					+ "where word = '" + s + "'"
+					+ "where word = '" + s + "'";
+			Log.d("select", s);
+			cursor = db.rawQuery(SQL, null);
+			Log.d("ab", "ab");
+			cursor.moveToNext();
+			Log.d("kk", "kk");
+			SQL = "update Private "
 					+ "set priority = priority + ";
-			cursor = db.rawQuery(SQL, null);
-			SQL = "update Private ";
-			if(cursor.getString(0).compareTo("0") == 0)
-				SQL += 50 + ", balloon = 100 ";
-			else
-				SQL += 100 + ", balloon = balloon - 100 ";
+			if(cursor.getInt(0) == 0){
+				SQL += "50 , balloon = 0 ";
+			}
+			else{
+				SQL += "100 , balloon = balloon - 100 ";
+			}
 			SQL += "where word = '" + s + "'"; 
+			Log.d("dc", "dc");
 			cursor = db.rawQuery(SQL, null);
-
+			Log.d("ac", "ac");
 			InputConnection ic = getCurrentInputConnection();
 			ic.commitText(s, s.length());
 			ic.finishComposingText();
