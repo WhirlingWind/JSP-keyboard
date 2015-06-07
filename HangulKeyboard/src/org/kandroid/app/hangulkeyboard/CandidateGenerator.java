@@ -76,25 +76,22 @@ public class CandidateGenerator extends AsyncTask<Void, Void, List<String>> {
 				for(int i=0;i<resultCnt;i++)
 				{
 					cursor.moveToNext();
-					rtn.add(cursor.getString(1));
-				}
-				for(int i=0;i<resultCnt;i++)
-				{
-					Log.d("check", array.get(0) + " " + rtn.get(temp) + " " + (500 - i * 100));
-					SQL = "insert into Private "
-							+ "values('" + array.get(0) + "', '" + rtn.get(temp++) + "', " + (500 - i * 100) + ", 0)";
-					try{
-					db.execSQL(SQL);
-					} catch (Exception e) {
-						Log.d("check error", e.toString());
+					if (temp == 0)
+						rtn.add(cursor.getString(1));
+					else {
+						int j;
+						Log.d("hoho", temp + " " + rtn.size());
+						for(j=0;j<temp;j++)
+							if(cursor.getString(1).compareTo(rtn.get(j)) == 0)
+								break;
+						if(temp == j)
+						{
+							rtn.add(cursor.getString(1));
+							SQL = "insert into Private "
+									+ "values('" + array.get(0) + "', '" + rtn.get(temp+j) + "', " + (500 - i * 100) + ", 0)";
+							db.execSQL(SQL);
+						}
 					}
-					SQL = "select * "
-							+ "from Private "
-							+ "where word = '" + rtn.get(temp-1) + "'";
-					cursor = db.rawQuery(SQL, null);
-					cursor.moveToNext();
-					Log.d("check1", cursor.getString(0) + " "+ cursor.getString(1) + " "+ cursor.getString(2) + " "+ cursor.getString(3));
-					
 				}
 			}
 		}
