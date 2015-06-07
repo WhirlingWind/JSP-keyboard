@@ -64,3 +64,12 @@ $RECYCLE.BIN/
 *.msi
 *.msm
 *.msp
+RemoteSystemsTempFiles/.project
+HangulKeyboard/.settings/org.eclipse.jdt.core.prefs
+HangulKeyboard/project.properties
+HangulKeyboard/project.properties
+db/res/values/dimens.xml
+db/res/values/strings.xml
+db/src/com/example/db/DatabaseHelper.java
+HangulKeyboard/.settings/org.eclipse.ltk.core.refactoring.prefs
+HangulKeyboard/libs/android-support-v4.jar

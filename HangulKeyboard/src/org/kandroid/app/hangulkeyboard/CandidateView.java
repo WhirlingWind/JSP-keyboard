@@ -21,6 +21,7 @@ import java.util.List;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
@@ -66,14 +67,19 @@ public class CandidateView extends View {
 	private int mTotalWidth;
 	
 	private GestureDetector mGestureDetector;
+	
+	public SQLiteDatabase db;
+	
+	public String previous = null;
 
 	/**
 	 * Construct a CandidateView for showing suggested words for completion.
 	 * @param context
 	 * @param attrs
 	 */
-	public CandidateView(Context context) {
+	public CandidateView(Context context, SQLiteDatabase db) {
 		super(context);
+		this.db = db;
 		mSelectionHighlight = context.getResources().getDrawable(
 				android.R.drawable.list_selector_background);
 		mSelectionHighlight.setState(new int[] {
@@ -273,7 +279,7 @@ public class CandidateView extends View {
 		clear();
 		
 		if (suggestions != null)
-			new CandidateGenerator (suggestions, typedWordValid, l).execute();
+			new CandidateGenerator (suggestions, typedWordValid, l, db, previous).execute();
 	}
 	
 	public int getSuggestionLength () {
@@ -285,7 +291,7 @@ public class CandidateView extends View {
 	}
 
 	public String getCompletionInfo (int idx) {
-
+		previous = mSuggestions.get(idx);
 		return mSuggestions.get(idx);
 	}
 
