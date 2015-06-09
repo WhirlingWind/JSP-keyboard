@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:key="root">
+
+    <PreferenceCategory android:title="데이터 업데이트">
+
+        <Preference android:key="d_server"
+            android:title="서버에서 다운로드"/>
+
+        <Preference android:key="d_facebook"
+            android:title="페이스북에서 수집"/>
+
+        <Preference android:key="d_kakao"
+            android:title="카카오톡에서 수집"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="데이터 삭제">
+
+        <Preference
+            android:key="d_del"
+            android:title="데이터 삭제"
+            android:summary="사용자의 입력으로부터 수집한 데이터를 삭제합니다"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="언어 선택">
+
+    </PreferenceCategory>
+
+</PreferenceScreen>
