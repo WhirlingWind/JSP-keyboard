@@ -70,16 +70,17 @@ public class CandidateView extends View {
 	
 	public SQLiteDatabase db;
 	
-	public String previous = null;
+	public String previous;
 
 	/**
 	 * Construct a CandidateView for showing suggested words for completion.
 	 * @param context
 	 * @param attrs
 	 */
-	public CandidateView(Context context, SQLiteDatabase db) {
+	public CandidateView(Context context, SQLiteDatabase db, String previous) {
 		super(context);
 		this.db = db;
+		this.previous = previous;
 		mSelectionHighlight = context.getResources().getDrawable(
 				android.R.drawable.list_selector_background);
 		mSelectionHighlight.setState(new int[] {
