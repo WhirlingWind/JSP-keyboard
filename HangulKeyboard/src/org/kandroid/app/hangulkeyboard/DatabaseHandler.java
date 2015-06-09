@@ -115,7 +115,7 @@ public class DatabaseHandler {
 		Log.d("kk", "kk");
 		SQL = "update Private "
 				+ "set priority = priority + ";
-		if(cursor.getInt(3) == 0){
+		if(cursor.getInt(3) >= 0){
 			SQL += "50 , balloon = 0 ";
 		}
 		else{
@@ -127,7 +127,7 @@ public class DatabaseHandler {
 		db.execSQL(SQL);
 		if(cursor.getInt(2) >= 1000) {
 			SQL = "update Private "
-					+ "set priority = priority / 2 "
+					+ "set priority = priority / 2, balloon = balloon - 50 "
 					+ "where initial = '" + cursor.getString(0) + "'";
 			db.execSQL(SQL);
 			Log.d("balloon", "half");
