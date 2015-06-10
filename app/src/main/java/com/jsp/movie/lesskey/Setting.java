@@ -95,7 +95,7 @@ public class Setting extends PreferenceActivity {
                 db.execSQL("delete from Private");
                 db.execSQL("delete from Context");
 
-                Toast.makeText(getActivity(), "All Datas are Removed.", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), "All Data are Removed.", Toast.LENGTH_LONG).show();
             }
             else
                 return false;

@@ -29,7 +29,7 @@ public class DatabaseHandler {
         Log.d("check", "count "+ resultCnt);
         if(resultCnt > 0)
         {
-            for(int i=0;i<(resultCnt > 5 ? 5 : resultCnt);i++)
+            for(int i=0;i<resultCnt;i++)
             {
                 cursor.moveToNext();
                 rtn.add(cursor.getString(1));
@@ -104,9 +104,10 @@ public class DatabaseHandler {
                     rtn.set(num, str);
                     num++;
                 }
-
                 cursor.close();
             }
+            for(int i=rtn.size()-1;i>4;i--)
+                rtn.remove(i);
         }
     }
 
@@ -138,6 +139,7 @@ public class DatabaseHandler {
             db.execSQL(SQL);
             Log.d("balloon", "half");
         }
+        cursor.close();
         Log.d("ac", "ac");
         if(previous != null)
         {
@@ -190,15 +192,15 @@ public class DatabaseHandler {
                         if(tmp == j)
                             SQL += 1;
                         else
-                            SQL += cursor.getInt(j+5) + 1;
+                            SQL += (cursor.getInt(j+5) + 1);
                     }
                     SQL += " where word = '" + s + "'";
                 }
                 Log.d("SQL3", SQL);
                 db.execSQL(SQL);
             }
+            cursor.close();
         }
-        cursor.close();
     }
 
     public void onNewWordGenerated(String newWord) {
