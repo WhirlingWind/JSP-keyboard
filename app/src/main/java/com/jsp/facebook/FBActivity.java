@@ -129,7 +129,7 @@ public class FBActivity extends Activity implements FacebookCallback<LoginResult
     }
 
     @Override
-    public void onPostExcute() {
+    public void onPostExecute() {
 
         progress.cancel();
     }

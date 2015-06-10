@@ -38,7 +38,7 @@ public class FacebookParser extends AsyncTask<JSONObject, Void, ArrayList<String
 
 	public interface OnPostListener {
 
-		public void onPostExcute();
+		public void onPostExecute();
 	}
 
 	public OnPostListener l = null;
@@ -115,7 +115,7 @@ public class FacebookParser extends AsyncTask<JSONObject, Void, ArrayList<String
 		Toast.makeText(context, "FB Download Complete.", Toast.LENGTH_SHORT).show();
 
 		if (l != null)
-			l.onPostExcute();
+			l.onPostExecute();
 	}
 	@Override
 	protected void onProgressUpdate(Void... values) {}

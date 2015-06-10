@@ -15,17 +15,4 @@
         android:layout_height="wrap_content"
         android:id="@+id/list"/>
 
-    <ScrollView
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:background="@android:color/white">
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="30dp"
-            android:orientation="vertical"
-            android:id="@+id/result">
-
-        </LinearLayout>
-    </ScrollView>
 </LinearLayout>

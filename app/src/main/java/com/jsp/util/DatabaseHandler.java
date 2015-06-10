@@ -23,13 +23,13 @@ public class DatabaseHandler {
                 + "from Private "
                 + "where initial = '" + word + "' "
                 + "order by priority desc "
-                + "limit 5";
+                + "limit 10";
         Cursor cursor = db.rawQuery(SQL, null);
         int resultCnt = cursor.getCount();
         Log.d("check", "count "+ resultCnt);
         if(resultCnt > 0)
         {
-            for(int i=0;i<resultCnt;i++)
+            for(int i=0;i<(resultCnt > 5 ? 5 : resultCnt);i++)
             {
                 cursor.moveToNext();
                 rtn.add(cursor.getString(1));
@@ -128,8 +128,6 @@ public class DatabaseHandler {
             SQL += "100 , balloon = balloon - 50 ";
         }
 
-        cursor.close();
-
         SQL += "where word = '" + s + "'";
         Log.d("dc", "dc");
         db.execSQL(SQL);
@@ -150,8 +148,6 @@ public class DatabaseHandler {
             cursor = db.rawQuery(SQL, null);
 
             int count = cursor.getCount();
-
-            cursor.close();
 
             if(count == 0) {
                 SQL = "insert into Context(word, pre1, age1) "
@@ -202,6 +198,7 @@ public class DatabaseHandler {
                 db.execSQL(SQL);
             }
         }
+        cursor.close();
     }
 
     public void onNewWordGenerated(String newWord) {
