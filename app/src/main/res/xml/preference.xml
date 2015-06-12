@@ -6,7 +6,7 @@
     <PreferenceCategory android:title="데이터 업데이트">
 
         <Preference android:key="d_server"
-            android:title="서버에서 다운로드"/>
+            android:title="다운로드/업로드"/>
 
         <Preference android:key="d_facebook"
             android:title="페이스북에서 수집"/>

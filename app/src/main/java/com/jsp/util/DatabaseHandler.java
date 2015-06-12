@@ -8,6 +8,13 @@ import java.util.Scanner;
 import android.util.Log;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.Cursor;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.LineNumberReader;
+import java.util.NoSuchElementException;
+
+import android.os.Handler;
+import android.os.Message;
 
 public class DatabaseHandler {
 
@@ -106,8 +113,11 @@ public class DatabaseHandler {
                 }
                 cursor.close();
             }
-            for(int i=rtn.size()-1;i>4;i--)
-                rtn.remove(i);
+        }
+        for(int i=rtn.size()-1;i>4;i--) {
+            Log.d("Size", ""+rtn.size());
+
+            rtn.remove(i);
         }
     }
 
@@ -239,22 +249,113 @@ public class DatabaseHandler {
                     + "set priority = priority + 100 "
                     + "where word = '" + newWord + "'";
         }
+        Log.d("debug", SQL);
         db.execSQL(SQL);
     }
 
-    public void ServerTableInitializer(File server) {
+    public void ServerTableInitializer(File server,Handler handler) {
+
+
         try {
+            LineNumberReader  lnr = new LineNumberReader(new FileReader(server));
+            lnr.skip(Long.MAX_VALUE);
+            int max = lnr.getLineNumber() + 1;
+
+            handler.sendMessage(Message.obtain(handler,max));//Add 1 because line index starts at 0
+// Finally, the LineNumberReader object should be closed to prevent resource leak
+            lnr.close();
             Scanner sc = new Scanner(server);
+
             while (sc.hasNext()) {
                 String SQL = "insert or replace into Server "
                         + "values('" + sc.next() + "', '" + sc.next() + "', '" + sc.next() +"')";
                 db.execSQL(SQL);
+                handler.sendMessage(Message.obtain(handler,-1));
             }
+
+            handler.sendMessage(Message.obtain(handler,-2));
+
             sc.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }catch (NoSuchElementException e){
+            Log.e("db"+e.toString(),"hello");
+
+            e.printStackTrace();
         }
     }
+
+
+
+    public void PrivateDataExport(List<String> rtn,Handler handler) {
+
+        String SQL = "select * "
+                + "from Private "
+                + "order by priority desc ";
+        Cursor cursor = db.rawQuery(SQL, null);
+        int resultCnt = cursor.getCount();
+        handler.sendMessage(Message.obtain(handler,resultCnt));
+        Log.d("check", "count " + resultCnt);
+        if(resultCnt > 0)
+        {
+            for(int i=0;i<resultCnt;i++)
+            {
+                cursor.moveToNext();
+                rtn.add(cursor.getString(0));
+                rtn.add("\t");
+                rtn.add(cursor.getString(1));
+                rtn.add("\t");
+                rtn.add(cursor.getString(2));
+                rtn.add("\t");
+                rtn.add(cursor.getString(3));
+                rtn.add("\n");
+                handler.sendMessage(Message.obtain(handler,-1));
+            }
+        }
+        else{
+            rtn.add("empty");
+        }
+
+        handler.sendMessage(Message.obtain(handler,-2));
+
+
+        cursor.close();
+
+
+    }
+
+
+    public void PrivateTableInitializer(File user, Handler handler) {
+        try {
+            LineNumberReader  lnr = new LineNumberReader(new FileReader(user));
+            lnr.skip(Long.MAX_VALUE);
+            int max = lnr.getLineNumber() + 1;
+
+            handler.sendMessage(Message.obtain(handler,max));//Add 1 because line index starts at 0
+// Finally, the LineNumberReader object should be closed to prevent resource leak
+            lnr.close();
+
+
+            Scanner sc = new Scanner(user);
+            while (sc.hasNext()) {
+                String SQL = "insert or replace into Private "
+                        + "values('" + sc.next() + "', '" + sc.next() + "', '" + sc.next() +  "', '" + sc.next() +"')";
+                db.execSQL(SQL);
+                handler.sendMessage(Message.obtain(handler, -1));
+            }
+
+            handler.sendMessage(Message.obtain(handler,-2));
+            sc.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 
     private final static char choTable[] = {
             'ㄱ', 'ㄲ', 'ㄴ', 'ㄷ', 'ㄸ', 'ㄹ', 'ㅁ', 'ㅂ', 'ㅃ', 'ㅅ', 'ㅆ', 'ㅇ', 'ㅈ', 'ㅉ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ'

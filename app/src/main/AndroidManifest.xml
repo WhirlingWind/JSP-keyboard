@@ -38,11 +38,6 @@
             android:theme="@android:style/Theme.DeviceDefault.Light"/>
 
         <activity
-            android:name="com.jsp.file.FDActivity"
-            android:label="@string/app_name"
-            android:theme="@android:style/Theme.DeviceDefault.Light"/>
-
-        <activity
             android:name="com.jsp.kakao.KTActivity"
             android:label="@string/app_name"
             android:theme="@android:style/Theme.DeviceDefault.Light"/>
@@ -52,6 +47,24 @@
                 "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:label="@string/app_name"/>
+
+        <activity
+            android:name="com.jsp.server.ServerCon"
+            android:label="less_key"
+            android:theme="@android:style/Theme.DeviceDefault.Light"/>
+
+        <activity
+            android:name="com.jsp.server.Upload"
+            android:label="less_key"
+            android:theme="@android:style/Theme.DeviceDefault.Light"/>
+
+        <activity
+            android:name="com.jsp.server.DownloadBackup"
+            android:label="less_key"
+            android:theme="@android:style/Theme.DeviceDefault.Light"/>
+
+
+
 
         <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
 

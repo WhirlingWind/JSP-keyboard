@@ -36,15 +36,15 @@ public class FacebookParser extends AsyncTask<JSONObject, Void, ArrayList<String
         this.dbHandler = dbHandler;
     }
 
-	public interface OnPostListener {
+    public interface OnPostListener {
 
-		public void onPostExecute();
-	}
+        public void onPostExcute();
+    }
 
-	public OnPostListener l = null;
+    public OnPostListener l = null;
 
-	@Override
-	protected ArrayList<String> doInBackground(JSONObject... params) {
+    @Override
+    protected ArrayList<String> doInBackground(JSONObject... params) {
 
         JSONObject jsonObject = params[0];
         JSONArray list;
@@ -107,18 +107,18 @@ public class FacebookParser extends AsyncTask<JSONObject, Void, ArrayList<String
                 dbHandler.onNewWordGenerated(s);
         }
 
-		return arr;
-	}
-	@Override
-	protected void onPostExecute(ArrayList<String> result) {
+        return arr;
+    }
+    @Override
+    protected void onPostExecute(ArrayList<String> result) {
 
-		Toast.makeText(context, "FB Download Complete.", Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, "FB Download Complete.", Toast.LENGTH_SHORT).show();
 
-		if (l != null)
-			l.onPostExecute();
-	}
-	@Override
-	protected void onProgressUpdate(Void... values) {}
+        if (l != null)
+            l.onPostExcute();
+    }
+    @Override
+    protected void onProgressUpdate(Void... values) {}
 
     private boolean isKorean (char c) {
 

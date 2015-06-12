@@ -12,16 +12,15 @@ import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
-import com.jsp.file.FileParser;
-import com.jsp.movie.lesskey.R;
 import com.jsp.util.DatabaseHandler;
 import com.jsp.util.DatabaseHelper;
 import com.jsp.util.ExternalStorageHandler;
+import com.jsp.movie.lesskey.R;
 
 import java.io.File;
 
 
-public class KTActivity extends Activity implements AdapterView.OnItemClickListener, FileParser.OnPostListener {
+public class KTActivity extends Activity implements AdapterView.OnItemClickListener, KakaoParser.OnPostListener {
 
     private ListView list;
     private LinearLayout result;
@@ -79,7 +78,7 @@ public class KTActivity extends Activity implements AdapterView.OnItemClickListe
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-        FileParser parser = new FileParser(this, dbHandler);
+        KakaoParser parser = new KakaoParser(this, dbHandler);
 
         progress.setMessage("Parsing Data :)");
         progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
@@ -91,7 +90,7 @@ public class KTActivity extends Activity implements AdapterView.OnItemClickListe
     }
 
     @Override
-    public void onPostExecute() {
+    public void onPostExcute() {
 
         progress.cancel();
     }

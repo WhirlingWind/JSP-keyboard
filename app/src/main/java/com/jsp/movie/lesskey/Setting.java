@@ -18,11 +18,11 @@ public class Setting extends PreferenceActivity {
 
     @Override
     public Intent getIntent() {
-    final Intent modIntent = new Intent(super.getIntent());
-    modIntent.putExtra(EXTRA_SHOW_FRAGMENT, Settings.class.getName());
-    modIntent.putExtra(EXTRA_NO_HEADERS, true);
-    return modIntent;
-}
+        final Intent modIntent = new Intent(super.getIntent());
+        modIntent.putExtra(EXTRA_SHOW_FRAGMENT, Settings.class.getName());
+        modIntent.putExtra(EXTRA_NO_HEADERS, true);
+        return modIntent;
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

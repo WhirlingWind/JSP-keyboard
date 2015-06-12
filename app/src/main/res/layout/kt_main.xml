@@ -8,6 +8,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="카카오톡 대화 파일 선택"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="30dp"
+        android:layout_gravity="center_horizontal"
         android:textSize="@dimen/abc_text_size_large_material"/>
 
     <ListView

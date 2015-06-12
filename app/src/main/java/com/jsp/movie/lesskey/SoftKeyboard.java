@@ -116,6 +116,7 @@ public class SoftKeyboard extends InputMethodService
      * is called after creation and any configuration change.
      */
     @Override public void onInitializeInterface() {
+        Log.d("init", "aaaaaaaaaaaaa1");
         if (mQwertyKeyboard != null) {
             // Configuration changes can happen after the keyboard gets recreated,
             // so we need to be able to re-build the keyboards if the available
@@ -141,6 +142,7 @@ public class SoftKeyboard extends InputMethodService
      * a configuration change.
      */
     @Override public View onCreateInputView() {
+        Log.d("init", "aaaaaaaaaaaaa2");
         mInputView = (LatinKeyboardView) getLayoutInflater().inflate(
                 R.layout.input, null);
         mInputView.setOnKeyboardActionListener(this);
@@ -155,9 +157,16 @@ public class SoftKeyboard extends InputMethodService
      */
 
     @Override public View onCreateCandidatesView() {
+        Log.d("init", "aaaaaaaaaaaaa3");
         mCandidateView = new CandidateView(this, dbHandler, previous);
         mCandidateView.setService(this);
         return mCandidateView;
+    }
+    @Override public void onComputeInsets(InputMethodService.Insets outInsets) {
+        super.onComputeInsets(outInsets);
+        if (!isFullscreenMode()) {
+            outInsets.contentTopInsets = outInsets.visibleTopInsets;
+        }
     }
 
     /**
@@ -337,16 +346,7 @@ public class SoftKeyboard extends InputMethodService
             }
         }
         else if (current == mHangulQwertyKeyboard || current == mHangulQwertyShiftedKeyboard) {
-            if (mComposing.length() > 0 && (newSelStart != candidatesEnd
-                    || newSelEnd != candidatesEnd)) {
-                mComposing.setLength(0);
-//              updateCandidates();
-                clearHangul();
-                InputConnection ic = getCurrentInputConnection();
-                if (ic != null) {
-                    ic.finishComposingText();
-                }
-            }
+
         }
         else {
             if (mComposing.length() > 0 && (newSelStart != candidatesEnd
